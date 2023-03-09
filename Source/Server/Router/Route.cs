@@ -13,9 +13,9 @@ namespace Z3Test
                 this.handler = handler;
             }
 
-            public string method {get;set;}
-            public string path {get;set;}
-            public RequestHandler handler {get;set;}
+            public string method { get; set; }
+            public string path { get; set; }
+            public RequestHandler handler { get; set; }
         }
     }
 }

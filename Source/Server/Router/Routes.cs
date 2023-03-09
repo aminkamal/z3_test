@@ -7,7 +7,7 @@ namespace Z3Test
         {
             public static void AddRoutes()
             {
-                routes.Add(new Route{method = "POST", path = "/users" , handler = Handler.CreateAccountHandler});
+                routes.Add(new Route { method = "POST", path = "/users", handler = Handler.CreateAccountHandler });
             }
         }
     }
