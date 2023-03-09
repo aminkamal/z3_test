@@ -1,16 +1,24 @@
 using System.Net;
+using Z3Test.Application;
+using Z3Test.Server.Schema;
 
 namespace Z3Test
 {
     namespace Server
     {
-        public delegate void RequestHandler(HttpListenerContext ctx);
-
-        public static partial class Router
+        public partial class Router
         {
-            static List<Route> routes = new List<Route>();
+            private List<Route> routes { get; set; }
 
-            public static void Handle(HttpListenerContext ctx)
+            private ApplicationContext appCtx;
+
+            public Router()
+            {
+                routes = new List<Route>();
+                appCtx = new ApplicationContext();
+            }
+
+            public async void Handle(HttpListenerContext ctx)
             {
                 var request = ctx.Request;
                 var method = request.HttpMethod;
@@ -18,8 +26,36 @@ namespace Z3Test
 
                 try
                 {
-                    var route = routes.First(x => x.path == path && x.method == method);
-                    route.handler(ctx);
+                    var pathToFind = "";
+                    var urlSegments = path.Substring(1).Split('/');
+                    var urlParams = new List<string>();
+
+                    for (int i = 0; i < urlSegments.Length; i++)
+                    {
+                        if (i % 2 != 0)
+                        {
+                            urlParams.Add(urlSegments[i]);
+                            pathToFind += $"/<param{urlParams.Count}>";
+                        }
+                        else
+                        {
+                            pathToFind += $"/{urlSegments[i]}";
+                        }
+                    }
+
+                    var matchingRoute = routes.Find(x => x.path == pathToFind && x.method == method);
+
+                    if (!matchingRoute.IsPublic!)
+                    {
+                        var result = Middleware.Authentication(appCtx, ctx);
+                        if (!result)
+                        {
+                            await Response.Write(ctx, 401, new GenericResponse { Success = false, Error = "unauthorized" });
+                            return;
+                        }
+                    }
+
+                    matchingRoute.handler(appCtx, ctx, urlParams);
                 }
                 catch (InvalidOperationException)
                 {

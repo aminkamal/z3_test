@@ -1,6 +1,7 @@
 using System.Net;
 using System.Text.Json;
 using Z3Test.Server.Schema;
+using Z3Test.Application;
 
 namespace Z3Test
 {
@@ -8,13 +9,13 @@ namespace Z3Test
     {
         public static partial class Handler
         {
-            public static void CreateAccountHandler(HttpListenerContext ctx)
+            public static async void GetUserFriendsHandler(ApplicationContext appCtx, HttpListenerContext ctx, List<string> urlParams)
             {
                 var req = new StreamReader(ctx.Request.InputStream).ReadToEnd();
-                var mod = JsonSerializer.Deserialize<CreateAccountRequest>(req);
 
-                Console.WriteLine(mod.Username);
-                Console.WriteLine(mod.Password);
+                var user = appCtx.accountManager.GetUser(urlParams[0]);
+
+                await Response.Write(ctx, 200, user.Friends);
             }
         }
     }

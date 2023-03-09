@@ -1,33 +1,41 @@
 using System.Net;
-using System.Text;
+using Z3Test.Application;
 
 namespace Z3Test
 {
     namespace Server
     {
-        static partial class HttpServer
+        public partial class HttpServer
         {
-            public static HttpListener listener;
+            public HttpListener listener;
 
-            public static void Initialize(string url)
+            private Router router;
+
+            private ApplicationContext appCtx;
+
+            public void Initialize(string url)
             {
                 // Create a Http server and start listening for incoming connections
                 listener = new HttpListener();
                 listener.Prefixes.Add(url);
                 listener.Start();
 
-                Router.AddRoutes();
+                // Initialize dependencies
+                router = new Router();
+                router.AddRoutes();
+
+                appCtx = new ApplicationContext();
 
                 Console.WriteLine("Listening for connections on {0}", url);
             }
 
-            public static void Shutdown()
+            public void Shutdown()
             {
                 // Close the listener
                 listener.Close();
             }
 
-            public static async Task HandleIncomingConnections()
+            public async Task HandleIncomingConnections()
             {
                 bool runServer = true;
 
@@ -36,7 +44,7 @@ namespace Z3Test
                 {
                     // Will wait here until we hear from a connection
                     HttpListenerContext ctx = await listener.GetContextAsync();
-                    Router.Handle(ctx);
+                    router.Handle(ctx);
                 }
             }
         }
