@@ -23,8 +23,19 @@ namespace Z3Test
                 return uuid.ToString();
             }
 
-            public void CreateNew(string username, string password)
+            public bool CreateNew(string username, string password)
             {
+                // Check if a user already exists with this name
+                try
+                {
+                    var user = userStore.Find(x => x.Value.Name == username);
+                    return false;
+                }
+                catch (InvalidOperationException)
+                {
+                    // OK, user name is available
+                }
+
                 var defaultGemItem = new Item{
                     ID = "gems", // TODO: Extract gems into a constant
                     AcquiredOn = DateTime.Now,
@@ -45,6 +56,8 @@ namespace Z3Test
                     Items = new List<Item>{defaultGemItem},
                     Platform = UserPlatform.WEB
                 });
+
+                return true;
             }
 
             public User? GetUser(string userID)

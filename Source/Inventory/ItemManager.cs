@@ -48,6 +48,8 @@ namespace Z3Test
                     });
 
                     gemItem.Quantity -= purchasableItem.PriceGems.Value;
+
+                    return true;
                 }
 
                 // TODO: return reason, e.g item not found, not enough currency, cannot buy with gems..etc

@@ -24,7 +24,7 @@ namespace Z3Test
 
                 var result = appCtx.itemManager.PurchaseItem(userID, grantUserItemRequest.ItemID);
 
-                await Response.Write(ctx, 200, new GenericResponse { Success = true });
+                await Response.Write(ctx, result ? 200 : 400, new GenericResponse { Success = result });
             }
         }
     }

@@ -15,9 +15,9 @@ namespace Z3Test
                 var req = new StreamReader(ctx.Request.InputStream).ReadToEnd();
                 var createAccountRequest = JsonSerializer.Deserialize<CreateAccountRequest>(req);
 
-                appCtx.accountManager.CreateNew(createAccountRequest.Username, createAccountRequest.Password);
+                var result = appCtx.accountManager.CreateNew(createAccountRequest.Username, createAccountRequest.Password);
 
-                await Response.Write(ctx, 201, new GenericResponse { Success = true });
+                await Response.Write(ctx, result ? 201 : 400, new GenericResponse { Success = result });
             }
         }
     }
