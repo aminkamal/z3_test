@@ -27,7 +27,7 @@ namespace Z3Test
 
                 accountManager = new UserManager(userStore, accessTokenStore);
 
-                itemManager = new ItemManager(userStore);
+                itemManager = new ItemManager(userStore, purchasableItemsStore);
 
                 shopManager = new ShopManager(purchasableItemsStore);
 

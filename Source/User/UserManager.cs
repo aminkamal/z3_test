@@ -25,6 +25,15 @@ namespace Z3Test
 
             public void CreateNew(string username, string password)
             {
+                var defaultGemItem = new Item{
+                    ID = "gems", // TODO: Extract gems into a constant
+                    AcquiredOn = DateTime.Now,
+                    Description = "The amount of premium currency you currently have",
+                    Quantity = 1000,
+                    Rarity = 1,
+                    Type = ItemType.GEM
+                };
+
                 userStore.Add(new User
                 {
                     ID = generateUUID(),
@@ -33,7 +42,7 @@ namespace Z3Test
                     IsBanned = false,
                     RegisteredOn = DateTime.Now,
                     Friends = new List<string>(),
-                    Items = new List<Item>(),
+                    Items = new List<Item>{defaultGemItem},
                     Platform = UserPlatform.WEB
                 });
             }

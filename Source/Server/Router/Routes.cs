@@ -20,8 +20,8 @@ namespace Z3Test
                 routes.Add(new Route { method = "DELETE", path = "/users/<param1>/friends", handler = Handler.DeleteUserFriendHandler });
                 
                 // User inventory
-                //routes.Add(new Route { method = "POST", path = "/users/<param1>/items", handler = Handler.GrantItemHandler });
-                //routes.Add(new Route { method = "GET", path = "/users/<param1>/items", handler = Handler.GetUserInventory });
+                routes.Add(new Route { method = "POST", path = "/users/<param1>/items", handler = Handler.GrantUserItemHandler });
+                routes.Add(new Route { method = "GET", path = "/users/<param1>/items", handler = Handler.GetUserItemsHandler });
                 
                 // Shop
                 routes.Add(new Route { method = "GET", path = "/purchasable-items", handler = Handler.GetPurchasableItemsHandler, IsPublic = true });

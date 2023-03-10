@@ -4,7 +4,7 @@ namespace Z3Test
 {
     namespace Models
     {
-        public enum ItemType { UNIT, GEM, ACHIVEMENT }
+        public enum ItemType { UNIT, WEAPON, GEM, ACHIVEMENT }
 
         public class Item
         {
@@ -13,17 +13,14 @@ namespace Z3Test
             [JsonConverter(typeof(JsonStringEnumConverter))]
             public ItemType Type { get; set; }
 
-            public string Name { get; set; }
-
             public string Description { get; set; }
 
             public int Rarity { get; set; }
 
-            // Once acquired by a user, InstanceID and AquiredOn
-            // will no longer be null
-            public string InstanceID { get; set; }
-
+            // Once acquired by a user, AquiredOn will no longer be null
             public DateTime AcquiredOn { get; set; }
+
+            public int Quantity { get; set; }
         }
     }
 }

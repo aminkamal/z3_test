@@ -6,11 +6,11 @@ namespace Z3Test
 {
     namespace Models
     {
-        public class PurchasableItem
+        public class PurchasableItem : Item
         {
-            public string ID { get; set; }
-
-            public int Price { get; set; }
+            public int? PriceRealMoney { get; set; }
+            
+            public int? PriceGems { get; set; }
 
             public string GrantItemID { get; set; }
         }
