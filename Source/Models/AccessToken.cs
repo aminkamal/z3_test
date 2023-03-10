@@ -4,10 +4,10 @@ namespace Z3Test
     {
         public class AccessToken
         {
-            public string ID { get; set; }
+            public string ID { get; set; } = "";
             
             // TODO: ideally we don't need UserID here
-            public string UserID { get; set; }
+            public string UserID { get; set; } = "";
         }
     }
 }

@@ -1,7 +1,6 @@
 using System.Net;
-using System.Text.Json;
-using Z3Test.Server.Schema;
 using Z3Test.Application;
+using Z3Test.Models;
 
 namespace Z3Test
 {
@@ -9,16 +8,16 @@ namespace Z3Test
     {
         public static class Middleware
         {
-            public static bool Authentication(ApplicationContext appCtx, HttpListenerContext ctx, List<string> UrlParams = null)
+            public static AccessToken? Authentication(ApplicationContext appCtx, HttpListenerContext ctx)
             {
                 var authorizationHeader = ctx.Request.Headers.Get("Authorization");
                 if (authorizationHeader != null)
                 {
                     var accessToken = appCtx.accessTokenManager.Get(authorizationHeader);
-                    return true;
+                    return accessToken;
                 }
 
-                return false;
+                return null;
             }
         }
     }

@@ -1,11 +1,12 @@
 using System.Net;
 using Z3Test.Application;
+using Z3Test.Models;
 
 namespace Z3Test
 {
     namespace Server
     {
-        public delegate void RequestHandler(ApplicationContext appCtx, HttpListenerContext ctx, List<string> UrlParams = null);
+        public delegate void RequestHandler(ApplicationContext appCtx, HttpListenerContext ctx, List<string> UrlParams, AccessToken accessToken);
 
         public struct Route
         {

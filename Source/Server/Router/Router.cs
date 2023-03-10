@@ -1,6 +1,7 @@
 using System.Net;
 using Z3Test.Application;
 using Z3Test.Server.Schema;
+using Z3Test.Models;
 
 namespace Z3Test
 {
@@ -45,17 +46,18 @@ namespace Z3Test
 
                     var matchingRoute = routes.Find(x => x.path == pathToFind && x.method == method);
 
+                    var accessToken = new AccessToken();
                     if (!matchingRoute.IsPublic!)
                     {
-                        var result = Middleware.Authentication(appCtx, ctx);
-                        if (!result)
+                        accessToken = Middleware.Authentication(appCtx, ctx);
+                        if (accessToken == null)
                         {
                             await Response.Write(ctx, 401, new GenericResponse { Success = false, Error = "unauthorized" });
                             return;
                         }
                     }
 
-                    matchingRoute.handler(appCtx, ctx, urlParams);
+                    matchingRoute.handler(appCtx, ctx, urlParams, accessToken);
                 }
                 catch (InvalidOperationException)
                 {
