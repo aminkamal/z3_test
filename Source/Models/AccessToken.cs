@@ -6,7 +6,6 @@ namespace Z3Test
         {
             public string ID { get; set; } = "";
             
-            // TODO: ideally we don't need UserID here
             public string UserID { get; set; } = "";
         }
     }
