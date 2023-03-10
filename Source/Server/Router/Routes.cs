@@ -24,9 +24,7 @@ namespace Z3Test
                 //routes.Add(new Route { method = "GET", path = "/users/<param1>/items", handler = Handler.GetUserInventory });
                 
                 // Shop
-                //routes.Add(new Route { method = "GET", path = "/purchasable-items", handler = Handler.GetPurchasableItems });
-
-
+                routes.Add(new Route { method = "GET", path = "/purchasable-items", handler = Handler.GetPurchasableItemsHandler, IsPublic = true });
             }
         }
     }

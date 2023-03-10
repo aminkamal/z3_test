@@ -1,6 +1,5 @@
-using System.Net;
-using System.Text.Json;
-using Z3Test.Server.Schema;
+using Z3Test.Persistence;
+using Z3Test.Models;
 
 namespace Z3Test
 {
@@ -8,9 +7,11 @@ namespace Z3Test
     {
         public class ItemManager
         {
-            public ItemManager()
+            private IDataStore<User> userStore;
+
+            public ItemManager(IDataStore<User> userStore)
             {
-                
+                this.userStore = userStore;
             }
         }
     }

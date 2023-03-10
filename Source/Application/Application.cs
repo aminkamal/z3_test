@@ -1,7 +1,7 @@
-using System.Net;
 using Z3Test.Persistence;
 using Z3Test.Models;
 using Z3Test.Identity;
+using Z3Test.Inventory;
 
 namespace Z3Test
 {
@@ -10,6 +10,10 @@ namespace Z3Test
         public class ApplicationContext
         {
             public UserManager accountManager;
+
+            public ItemManager itemManager;
+
+            public ShopManager shopManager;
 
             public AccessTokenManager accessTokenManager;
 
@@ -23,15 +27,11 @@ namespace Z3Test
 
                 accountManager = new UserManager(userStore, accessTokenStore);
 
-                accessTokenManager = new AccessTokenManager(accessTokenStore);
+                itemManager = new ItemManager(userStore);
 
-                // Add some shop items
-                purchasableItemsStore.Add(new PurchasableItem{ID="100", GrantItemID="gems_100", Price=900});
-                purchasableItemsStore.Add(new PurchasableItem{ID="101", GrantItemID="gems_300", Price=900});
-                purchasableItemsStore.Add(new PurchasableItem{ID="102", GrantItemID="gems_5000", Price=900});
-                purchasableItemsStore.Add(new PurchasableItem{ID="200", GrantItemID="base_warrior", Price=500});
-                purchasableItemsStore.Add(new PurchasableItem{ID="300", GrantItemID="base_warrior_axe", Price=300});
-                purchasableItemsStore.Add(new PurchasableItem{ID="201", GrantItemID="base_archer", Price=500});
+                shopManager = new ShopManager(purchasableItemsStore);
+
+                accessTokenManager = new AccessTokenManager(accessTokenStore);
             }
         }
     }
